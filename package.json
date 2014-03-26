@@ -1,0 +1,38 @@
+{
+  "name": "grunt-bump-wmappmanifest",
+  "description": "Grunt Task to read a WMAppManifest.xml file and bump its version",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Derik/grunt-bump-wmappmanifest",
+  "author": {
+    "name": "Derik Whittaker",
+    "email": "derik@graudo.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Derik/grunt-bump-wmappmanifest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Derik/grunt-bump-wmappmanifest/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/Derik/grunt-bump-wmappmanifest/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "xpath": "0.0.6",
+    "xmldom": "~0.1.19"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.4"
+  },
+  "keywords": [
+    "XML",
+    "Bump"
+  ]
+}
