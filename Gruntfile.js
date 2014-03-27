@@ -18,8 +18,7 @@ module.exports = function(grunt) {
     bump_wmappmanifest: {
         wpapp: {
             options: {
-                debug: true,
-                version: "1.0.1.1",
+                debug: true
             },
             src: "./test/files/WMAppManifest.xml",
             dest: "./test/files/WMAppManifest.xml"

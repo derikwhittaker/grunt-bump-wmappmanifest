@@ -18,7 +18,7 @@ module.exports = function(grunt) {
     
     function verifyFileExists(file){
        if( !grunt.file.exists(file) ){
-            grunt.log.fail('The provided source file was either not found or not provided');
+            grunt.fail.fatal('The provided source file was either not found or not provided');
         }        
     }
     
@@ -28,11 +28,36 @@ module.exports = function(grunt) {
             grunt.file.delete(dest);
         }     
     }
+    
+    function getVersion(options){
+        var VERSION_REGEXP = /([\'|\"]?version[\'|\"]?[ ]*:[ ]*[\'|\"]?)([\d||A-a|.|-]*)([\'|\"]?)/i;
+        
+        if( options.usePackageVersion){
+        
+            if( !grunt.file.exists(options.packageFile)){
+                grunt.fail.fatal('The provided Package.json file was not found.  Please check the path and try again.');
+            }
+            
+            var json = grunt.file.read(options.packageFile);
+            var packageObject = JSON.parse(json);
+            
+            return packageObject.version;
+        }
+        
+        if( options.version === "" ){
+            grunt.fail.fatal('You did not specify a version to use');
+        }
+        
+        return options.version;        
+    }
 
     grunt.registerMultiTask('bump_wmappmanifest', 'The best Grunt plugin ever.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            version: '.',            
+            usePackageVersion: true,
+            packageFile: './package.json',
+            xpath: '//Deployment/App/@Version',
+            version: '',
             debug: false
         });
       
@@ -40,11 +65,9 @@ module.exports = function(grunt) {
             grunt.log.writeflags(options, 'Options');            
         }
         
-//        verifyFileExists(options.src);
-//        cleanDestinationFile(options);
+        // determine where to get the version info from
+        var version = getVersion(options);
         
-        //grunt.log.writeln();
-//        
         this.files.forEach(function(file){   
             
             var src = file.src[0];
@@ -55,50 +78,20 @@ module.exports = function(grunt) {
             
             var xml = grunt.file.read(src);
             var doc = new dom().parseFromString(xml);
-            
-            var node = xpath.select("//Deployment/App/@Version", doc);
+
+            var node = xpath.select(options.xpath, doc);            
+            if( !node || node.length == 0 ) {
+                grunt.fail.fatal('The provided xPath: ' + options.xpath + ' was not correct');
+            }
             
             grunt.log.writeln('Current WMAppManifest Version: ' + node[0].value);        
             
-            node[0].value = options.version;
+            node[0].value = version;
             
-            grunt.log.writeln('Updated WMAppManifest Version: ' + node[0].value);
-            
+            grunt.log.writeln('Updated WMAppManifest Version: ' + node[0].value);            
             grunt.file.write(dest, doc);
 
-
         });
-        
-//        this.filesSrc.foreach(function(file){
-//            grunt.log.writeln(JSON.stringify(file));
-//        });
-        
-
-    // Iterate over all specified file groups.
-//    this.files.forEach(function(f) {
-//      // Concat specified files.
-//      var src = f.src.filter(function(filepath) {
-//        // Warn on and remove invalid source files (if nonull was set).
-//        if (!grunt.file.exists(filepath)) {
-//          grunt.log.warn('Source file "' + filepath + '" not found.');
-//          return false;
-//        } else {
-//          return true;
-//        }
-//      }).map(function(filepath) {
-//        // Read file source.
-//        return grunt.file.read(filepath);
-//      }).join(grunt.util.normalizelf(options.separator));
-//
-//      // Handle options.
-//      src += options.punctuation;
-//
-//      // Write the destination file.
-//      grunt.file.write(f.dest, src);
-//
-//      // Print a success message.
-//      grunt.log.writeln('File "' + f.dest + '" created.');
-//    });
   });
 
 };

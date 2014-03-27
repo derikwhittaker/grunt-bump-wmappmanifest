@@ -3,7 +3,7 @@
   <Languages xmlns="">
     <Language code="es"/>
   </Languages>
-  <App xmlns="" ProductID="{372a2056-3656-4c8d-b46b-8812fe7e0d6c}" Title="Orgspan Connect" RuntimeType="Silverlight" Version="1.0.1.1" Genre="apps.normal" Author="" Description="Sample description" Publisher="WinP8" PublisherID="{7d7fb4be-0a5a-4661-917a-dd3b4ceb0ede}">
+  <App xmlns="" ProductID="{372a2056-3656-4c8d-b46b-8812fe7e0d6c}" Title="Orgspan Connect" RuntimeType="Silverlight" Version="0.0.1" Genre="apps.normal" Author="" Description="Sample description" Publisher="WinP8" PublisherID="{7d7fb4be-0a5a-4661-917a-dd3b4ceb0ede}">
     <IconPath IsRelative="true" IsResource="false">Assets\win8_tile_logo_159x159_dark.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING"/>
