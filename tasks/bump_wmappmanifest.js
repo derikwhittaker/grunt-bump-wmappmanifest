@@ -68,7 +68,7 @@ module.exports = function(grunt) {
         // determine where to get the version info from
         var version = getVersion(options);
         
-        this.files.forEach(function(file){   
+        this.files.forEach(function(file){
             
             var src = file.src[0];
             var dest = file.dest;
